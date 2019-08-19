@@ -37,10 +37,10 @@ model.add(Flatten())
 model.add(Dense(64))
 model.add(Activation('relu'))
 model.add(Dropout(0.5))
-model.add(Dense(1))
+model.add(Dense(10))
 model.add(Activation('sigmoid'))
 
-model.compile(loss='binary_crossentropy',
+model.compile(loss='mean_squared_error', 
               optimizer='rmsprop',
               metrics=['accuracy'])
 
@@ -59,18 +59,18 @@ train_generator = train_datagen.flow_from_directory(
     train_data_dir,
     target_size=(img_width, img_height),
     batch_size=batch_size,
-    class_mode='binary')
+    class_mode='categorical')
 
 validation_generator = test_datagen.flow_from_directory(
     validation_data_dir,
     target_size=(img_width, img_height),
     batch_size=batch_size,
-    class_mode='binary')
+    class_mode='categorical')
 
 model.fit_generator(
     train_generator,
     steps_per_epoch=nb_train_samples // batch_size,
-    epochs=epochs,
+    epochs=epochs,	
     validation_data=validation_generator,
     validation_steps=nb_validation_samples // batch_size)
 
