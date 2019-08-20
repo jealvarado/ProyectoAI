@@ -12,8 +12,8 @@ train_data_dir = 'data/train'
 validation_data_dir = 'data/validation'
 nb_train_samples = 25443
 nb_validation_samples = 2823
-epochs = 10
-batch_size = 100
+epochs = 30
+batch_size = 500
 
 if K.image_data_format() == 'channels_first':
     input_shape = (3, img_width, img_height)
@@ -34,9 +34,9 @@ model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Flatten())
-model.add(Dense(64))
+model.add(Dense(256))
 model.add(Activation('relu'))
-model.add(Dropout(0.5))
+model.add(Dropout(0.2))
 model.add(Dense(10))
 model.add(Activation('sigmoid'))
 
@@ -74,4 +74,4 @@ model.fit_generator(
     validation_data=validation_generator,
     validation_steps=nb_validation_samples // batch_size)
 
-model.save_weights('first_try.h5')
+model.save_weights('weights.h5')
